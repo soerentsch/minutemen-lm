@@ -1,0 +1,12 @@
+{
+    "manifest_version": 3,
+    "name": "minutemen-lm",
+    "version": "1.0",
+    "description": "Advanced management of Chrome bookmarks.",
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "bookmarks"
+    ]
+  }
