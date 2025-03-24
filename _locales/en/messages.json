@@ -1,0 +1,14 @@
+{
+    "extensionName": {
+        "message": "minutemen-lm",
+        "description": "The extension's name."
+    },
+    "extensionDescription": {
+        "message": "Enhanced Chrome bookmark management.",
+        "description": "The extension's description."
+    },
+    "popupTitle": {
+        "message": "minutemen-lm",
+        "description": "The title of the popup."
+    }
+}

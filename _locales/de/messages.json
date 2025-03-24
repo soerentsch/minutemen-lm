@@ -1,0 +1,14 @@
+{
+    "extensionName": {
+        "message": "minutemen-lm",
+        "description": "Der Name der Erweiterung."
+    },
+    "extensionDescription": {
+        "message": "Erweiterte Verwaltung von Chrome-Lesezeichen.",
+        "description": "Die Beschreibung der Erweiterung."
+    },
+    "popupTitle": {
+        "message": "minutemen-lm",
+        "description": "Der Titel des Popups."
+    }
+}
