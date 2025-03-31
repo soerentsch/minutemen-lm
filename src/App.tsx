@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { ColDef, AllCommunityModule, ModuleRegistry, themeMaterial, colorSchemeDarkWarm } from "ag-grid-community";
+import { ColDef, AllCommunityModule, ModuleRegistry, themeMaterial, colorSchemeDarkWarm, GridOptions } from "ag-grid-community";
 
 ModuleRegistry.registerModules([AllCommunityModule])
 interface Bookmark {
@@ -38,12 +38,26 @@ const App: React.FC = () => {
   const theme = themeMaterial
     .withPart(colorSchemeDarkWarm)
     .withParams({
-      headerTextColor: 'rgb(204, 245, 172)'
+      headerTextColor: 'rgb(255, 255, 255)'
     });
+
+  const gridOptions: GridOptions<Bookmark> = {
+    defaultColDef: {
+      sortable: true,
+      filter: true,
+      resizable: true,
+    },
+    animateRows: true,
+    pagination: true,
+    paginationPageSize: 20,
+    domLayout: "autoHeight",
+    rowDragMultiRow: true,
+    rowSelection: "multiple",
+  };
 
   return (
     <div style={{ height: 500, width: "100%" }}>
-      <AgGridReact rowData={rowData} columnDefs={columnDefs} theme={theme} />
+      <AgGridReact rowData={rowData} columnDefs={columnDefs} theme={theme} gridOptions={gridOptions} />
     </div>
   );
 };
