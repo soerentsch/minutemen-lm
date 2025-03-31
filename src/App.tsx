@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import { AgGridReact } from "ag-grid-react";
+import { ColDef, AllCommunityModule, ModuleRegistry, themeMaterial, colorSchemeDarkWarm } from "ag-grid-community";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+ModuleRegistry.registerModules([AllCommunityModule])
+interface Bookmark {
+  id: string;
+  title: string;
+  url?: string;
+  dateAdded?: number;
 }
 
-export default App
+const App: React.FC = () => {
+  const [rowData, setRowData] = useState<Bookmark[]>([]);
+
+  useEffect(() => {
+    chrome.bookmarks.getTree((bookmarkTreeNodes) => {
+      const flattenBookmarks = (nodes: chrome.bookmarks.BookmarkTreeNode[]): Bookmark[] => {
+        return nodes.flatMap((node) => 
+          node.url
+            ? [{ id: node.id, title: node.title, url: node.url, dateAdded: node.dateAdded }]
+            : flattenBookmarks(node.children || [])
+        );
+      };
+
+      setRowData(flattenBookmarks(bookmarkTreeNodes));
+    });
+  }, []);
+
+  const columnDefs: ColDef<Bookmark>[] = [
+    { field: "title", headerName: "Titel", flex: 2 },
+    { field: "url", headerName: "URL", flex: 3 },
+    { field: "dateAdded", headerName: "Hinzugefügt", flex: 1, 
+      valueFormatter: (params) => params.value ? new Date(params.value).toLocaleString() : "" 
+    }
+  ];
+
+  const theme = themeMaterial
+    .withPart(colorSchemeDarkWarm)
+    .withParams({
+      headerTextColor: 'rgb(204, 245, 172)'
+    });
+
+  return (
+    <div style={{ height: 500, width: "100%" }}>
+      <AgGridReact rowData={rowData} columnDefs={columnDefs} theme={theme} />
+    </div>
+  );
+};
+
+export default App;

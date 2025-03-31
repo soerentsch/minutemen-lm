@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Bookmark Viewer",
+    "version": "1.0",
+    "description": "Zeigt alle Chrome-Lesezeichen in AG Grid an.",
+    "permissions": ["bookmarks"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_title": "Bookmarks"
+    }
+  }
+  
