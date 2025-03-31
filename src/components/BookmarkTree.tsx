@@ -38,8 +38,9 @@ const BookmarkTree: React.FC<BookmarkTreeProps> = ({ onSelect }) => {
 
   const handleNodeClick = (node: BookmarkNode) => {
     if (node.children) {
-      // Pass the folder's children (bookmarks and subfolders) to the grid
-      onSelect(node.children);
+        console.log("Node clicked:", node.title);   
+        // Pass the folder's children (bookmarks and subfolders) to the grid
+        onSelect(node.children);
     }
   };
 
