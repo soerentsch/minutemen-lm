@@ -23,7 +23,7 @@ const BookmarkGrid: React.FC<BookmarkGridProps> = ({ rowData }) => {
   };
 
   const theme = themeMaterial;
-
+  
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <AgGridReact rowData={rowData} columnDefs={columnDefs} defaultColDef={defaultColDef} theme={theme} />

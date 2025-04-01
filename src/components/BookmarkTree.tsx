@@ -27,7 +27,7 @@ const BookmarkTree: React.FC<BookmarkTreeProps> = ({ onSelect }) => {
     return nodes
       .filter((node) => !node.url) // Only include folders (nodes without a URL)
       .map((node) => (
-        <li key={node.id} onClick={() => handleNodeClick(node)}>
+        <li key={node.id} onClick={(event) => handleNodeClick(event, node)}>
           <span style={{ cursor: "pointer", fontWeight: "bold" }}>
             {node.title || "Untitled"}
           </span>
@@ -36,12 +36,13 @@ const BookmarkTree: React.FC<BookmarkTreeProps> = ({ onSelect }) => {
       ));
   };
 
-  const handleNodeClick = (node: BookmarkNode) => {
-    if (node.children) {
-        console.log("Node clicked:", node.title);   
-        // Pass the folder's children (bookmarks and subfolders) to the grid
-        onSelect(node.children);
-    }
+  const handleNodeClick = (event: React.MouseEvent, node: BookmarkNode) => {
+      event.stopPropagation(); // Prevent the event from bubbling up
+      if (node.children) {
+          console.log("Node clicked:", node.title);   
+          // Pass the folder's children (bookmarks and subfolders) to the grid
+          onSelect(node.children);
+      }
   };
 
   return (
